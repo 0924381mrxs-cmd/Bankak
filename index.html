@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<title>واجهة بنكك التجريبية</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+    font-family:Tahoma,Arial,sans-serif;
+    color:#111;
+    background:#fff;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+button,input{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.screen{
+    display:none;
+    min-height:100vh;
+    background:#fff;
+}
+
+.screen.active{
+    display:block;
+}
+
+/* =========================
+   الشعار
+========================= */
+
+.logo{
+    text-align:center;
+    color:#fff;
+    font-weight:bold;
+    line-height:.8;
+}
+
+.logo .arabic{
+    font-size:55px;
+    letter-spacing:-5px;
+}
+
+.logo .english{
+    font-size:55px;
+    letter-spacing:-3px;
+}
+
+.gold{
+    color:#c9a326;
+}
+
+/* =========================
+   تسجيل الدخول
+========================= */
+
+.login-screen{
+    min-height:100vh;
+    background:
+    linear-gradient(
+        to bottom,
+        #ff0808 0,
+        #ff0808 32%,
+        #c8172d 48%,
+        #fff 48%,
+        #fff 100%
+    );
+}
+
+.login-top{
+    height:315px;
+    padding-top:75px;
+    position:relative;
+}
+
+.language{
+    position:absolute;
+    top:15px;
+    right:15px;
+    width:45px;
+    height:45px;
+    border:2px solid #fff;
+    border-radius:8px;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+    font-weight:bold;
+    line-height:15px;
+}
+
+.login-logo .arabic{
+    font-size:43px;
+}
+
+.login-logo .english{
+    font-size:43px;
+}
+
+.login-fields{
+    position:absolute;
+    top:315px;
+    left:5%;
+    right:5%;
+}
+
+.input-box{
+    height:92px;
+    background:#fff;
+    border:2px solid #aaa;
+    border-radius:16px;
+    margin-bottom:30px;
+    box-shadow:0 2px 5px #777;
+    display:flex;
+    align-items:center;
+    padding:0 15px;
+}
+
+.input-icon{
+    width:55px;
+    font-size:38px;
+    color:#555;
+    text-align:center;
+}
+
+.input-box input{
+    border:0;
+    outline:none;
+    width:100%;
+    height:100%;
+    background:transparent;
+    font-size:20px;
+    color:#555;
+    text-align:right;
+}
+
+.input-box input::placeholder{
+    color:#aaa;
+}
+
+.password-wrapper{
+    position:relative;
+    width:100%;
+    height:100%;
+}
+
+.password-wrapper input{
+    padding-left:50px;
+}
+
+.eye{
+    position:absolute;
+    left:8px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:27px;
+    color:#555;
+}
+
+.login-btn{
+    width:100%;
+    height:85px;
+    border-radius:20px;
+    border:4px solid #a90000;
+    background:linear-gradient(#f46d6d,#f00000 60%);
+    color:#fff;
+    font-size:28px;
+    font-weight:bold;
+    box-shadow:0 5px 8px #888;
+}
+
+.login-links{
+    margin-top:50px;
+    display:flex;
+    justify-content:space-between;
+    color:#aaa;
+    font-size:19px;
+}
+
+.qr-share{
+    margin-top:55px;
+    color:#aaa;
+    font-size:20px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.qr{
+    font-size:45px;
+    color:#b51e2c;
+}
+
+/* =========================
+   الهيدر
+========================= */
+
+.header{
+    height:215px;
+    background:linear-gradient(#ff0808,#c71930);
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.header .logo .arabic{
+    font-size:35px;
+}
+
+.header .logo .english{
+    font-size:35px;
+}
+
+.info-btn{
+    position:absolute;
+    left:22px;
+    top:65px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#fff;
+    color:#df1627;
+    font-size:32px;
+    font-weight:bold;
+    font-style:italic;
+    border:0;
+}
+
+.menu-btn{
+    position:absolute;
+    right:22px;
+    top:67px;
+    background:none;
+    border:0;
+    width:50px;
+}
+
+.menu-btn span{
+    display:block;
+    height:5px;
+    margin:7px 0;
+    border-radius:5px;
+    background:#fff;
+}
+
+/* =========================
+   الترحيب
+========================= */
+
+.greeting{
+    height:95px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    border-bottom:1px solid #eee;
+}
+
+/* =========================
+   الخدمات
+========================= */
+
+.dashboard{
+    background:#f8f8f8;
+    min-height:100vh;
+}
+
+.services{
+    padding:40px 25px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:45px 25px;
+}
+
+.service{
+    border:0;
+    background:transparent;
+    text-align:center;
+    font-size:17px;
+    color:#111;
+    padding:0;
+}
+
+.service-icon{
+    width:75px;
+    height:75px;
+    margin:auto;
+    border-radius:12px;
+    background:linear-gradient(#f05d68,#e60014);
+    border:2px solid #8d1621;
+    box-shadow:0 5px 8px #777;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:38px;
+}
+
+.service-title{
+    margin-top:12px;
+    line-height:1.2;
+}
+
+/* =========================
+   الصفحات الداخلية
+========================= */
+
+.page-title{
+    height:145px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    position:relative;
+}
+
+.back-btn{
+    position:absolute;
+    right:20px;
+    top:20px;
+    min-width:105px;
+    height:55px;
+    background:#fff;
+    border:2px solid #a51622;
+    border-radius:14px;
+    color:#a51622;
+    font-size:21px;
+    box-shadow:0 3px 6px #888;
+}
+
+.content{
+    padding:0 20px 60px;
+}
+
+/* =========================
+   التحويلات
+========================= */
+
+.transfer-card{
+    height:120px;
+    background:#fff;
+    border:1px solid #ddd;
+    margin-bottom:50px;
+    box-shadow:0 3px 7px #ccc;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    font-size:23px;
+}
+
+.transfer-icon{
+    font-size:48px;
+    color:#c51e30;
+}
+
+.arrow{
+    color:#b51f2c;
+    font-size:55px;
+}
+
+/* =========================
+   تفاصيل الحساب
+========================= */
+
+.account-card{
+    background:#fff;
+    border:1px solid #ddd;
+    box-shadow:0 3px 7px #ccc;
+    margin-bottom:60px;
+}
+
+.account-top{
+    min-height:135px;
+    padding:15px 10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #ccc;
+}
+
+.account-info{
+    text-align:right;
+    flex:1;
+}
+
+.account-name{
+    color:#a52231;
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.account-number{
+    color:#96303a;
+    font-size:16px;
+    line-height:1.5;
+}
+
+.balance{
+    color:#15953c;
+    font-size:25px;
+    direction:ltr;
+    margin-right:8px;
+}
+
+.account-icon{
+    color:#ce2032;
+    font-size:50px;
+    width:65px;
+    text-align:center;
+}
+
+.account-actions{
+    height:85px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
+.account-action{
+    background:#fff;
+    border:0;
+    border-left:1px solid #ccc;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.account-action:last-child{
+    border-left:0;
+}
+
+.action-icon{
+    font-size:32px;
+    vertical-align:middle;
+    margin-right:8px;
+}
+
+/* =========================
+   الفواتير
+========================= */
+
+.tabs{
+    height:110px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    background:#d51c2c;
+}
+
+.tab{
+    border:0;
+    background:#d51c2c;
+    color:#fff;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.tab.active{
+    background:linear-gradient(#ff0909,#c7192c);
+}
+
+.bills{
+    padding:35px 20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px 20px;
+}
+
+.bill{
+    height:145px;
+    border-radius:28px;
+    border:4px solid #b30d18;
+    background:linear-gradient(#eaa0a4 0 48%,#e81c29 48%);
+    box-shadow:0 6px 10px #777;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+    padding:10px;
+    font-size:17px;
+}
+
+.bill-title{
+    position:absolute;
+    top:12px;
+    right:10px;
+    left:10px;
+    text-align:center;
+    font-size:19px;
+}
+
+.bill-icon{
+    position:absolute;
+    left:20px;
+    bottom:18px;
+    width:50px;
+    height:50px;
+    background:#fff;
+    color:#e21c2b;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+}
+
+/* =========================
+   النافذة
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:85%;
+    max-width:430px;
+    background:#fff;
+    border-radius:20px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 10px 30px #333;
+}
+
+.modal-box h3{
+    color:#c8172d;
+    font-size:27px;
+}
+
+.modal-box p{
+    font-size:20px;
+    line-height:1.7;
+}
+
+.modal-box button{
+    width:100%;
+    height:55px;
+    background:#d7192d;
+    border:0;
+    color:#fff;
+    border-radius:12px;
+    font-size:21px;
+}
+
+/* =========================
+   الشاشات الأكبر
+========================= */
+
+@media(min-width:601px){
+
+    .login-top{
+        height:420px;
+        padding-top:105px;
+    }
+
+    .login-fields{
+        top:420px;
+        left:10%;
+        right:10%;
+    }
+
+    .input-box{
+        height:100px;
+    }
+
+    .login-btn{
+        height:95px;
+    }
+
+    .services{
+        padding:50px;
+        gap:60px;
+    }
+
+    .service-icon{
+        width:100px;
+        height:100px;
+        font-size:50px;
+    }
+
+    .service{
+        font-size:21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     الواجهة الأولى: تسجيل الدخول
+===================================================== -->
+
+<section id="loginScreen" class="screen active login-screen">
+
+    <div class="login-top">
+
+        <div class="language">
+            A<br>ع
+        </div>
+
+        <div class="logo login-logo">
+
+            <div class="arabic">
+                بنكك
+            </div>
+
+            <div class="english">
+                <span class="gold">b</span>ankak
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="login-fields">
+
+        <!-- رقم الحساب -->
+
+        <div class="input-box">
+
+            <div class="input-icon">
+                ♙
+            </div>
+
+            <input
+                id="username"
+                type="text"
+                placeholder="أدخل رقم المعرف (رقم الحساب)"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- كلمة المرور -->
+
+        <div class="input-box">
+
+            <div class="input-icon">
+                ◉
+            </div>
+
+            <div class="password-wrapper">
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="أدخل كلمة المرور"
+                    autocomplete="off"
+                >
+
+                <span
+                    class="eye"
+                    onclick="togglePassword()"
+                >
+                    ◉
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- زر الدخول -->
+
+        <button
+            class="login-btn"
+            onclick="login()"
+        >
+            تسجيل الدخول
+        </button>
+
+
+        <div class="login-links">
+
+            <span>
+                تسجيل جديد؟
+            </span>
+
+            <span>
+                لا أستطيع تسجيل الدخول؟
+            </span>
+
+        </div>
+
+
+        <div class="qr-share">
+
+            <span class="qr">
+                ▦
+            </span>
+
+            <span>
+                شارك رمز
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     الواجهة الثانية: الرئيسية
+===================================================== -->
+
+<section id="homeScreen" class="screen dashboard">
+
+    <header class="header">
+
+        <button class="info-btn">
+            i
+        </button>
+
+
+        <div class="logo">
+
+            <div class="arabic">
+                بنكك
+            </div>
+
+            <div class="english">
+                <span class="gold">b</span>ankak
+            </div>
+
+        </div>
+
+
+        <button
+            class="menu-btn"
+            onclick="showInfo()"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </header>
+
+
+    <!-- الاسم المطلوب -->
+
+    <div class="greeting">
+        <strong>
+            المصمم ود نهر عطبرة
+        </strong>
+    </div>
+
+
+    <div class="services">
+
+        <!-- تفاصيل الحساب -->
+
+        <button
+            class="service"
+            onclick="openPage('accountScreen')"
+        >
+
+            <div class="service-icon">
+                ♙
+            </div>
+
+            <div class="service-title">
+                تفاصيل<br>الحساب
+            </div>
+
+        </button>
+
+
+        <!-- دفع الفواتير -->
+
+        <button
+            class="service"
+            onclick="openPage('billsScreen')"
+        >
+
+            <div class="service-icon">
+                ▤
+            </div>
+
+            <div class="service-title">
+                دفع فواتير
+            </div>
+
+        </button>
+
+
+        <!-- التحويلات -->
+
+        <button
+            class="service"
+            onclick="openPage('transferScreen')"
+        >
+
+            <div class="service-icon">
+                ↻
+            </div>
+
+            <div class="service-title">
+                تحويلات
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ▣
+            </div>
+
+            <div class="service-title">
+                سحب<br>بدون بطاقة
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ▦
+            </div>
+
+            <div class="service-title">
+                بنكك PAY
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ●
+            </div>
+
+            <div class="service-title">
+                طلب الودائع<br>الاستثمارية
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ♙+
+            </div>
+
+            <div class="service-title">
+                إدارة<br>المستفيدين
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ▣
+            </div>
+
+            <div class="service-title">
+                المعاملات<br>السابقة
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ▭
+            </div>
+
+            <div class="service-title">
+                إدارة البطاقات
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ☷
+            </div>
+
+            <div class="service-title">
+                الطلبات
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ✓
+            </div>
+
+            <div class="service-title">
+                أمر دفع دائم
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ⚙
+            </div>
+
+            <div class="service-title">
+                الضبط
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                ↻
+            </div>
+
+            <div class="service-title">
+                خدمات العملات
+            </div>
+
+        </button>
+
+
+        <button
+            class="service"
+            onclick="showInfo()"
+        >
+
+            <div class="service-icon">
+                🛒
+            </div>
+
+            <div class="service-title">
+                التجارة<br>الإلكترونية
+            </div>
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     التحويلات
+===================================================== -->
+
+<section id="transferScreen" class="screen">
+
+    <header class="header">
+
+        <button class="info-btn">
+            i
+        </button>
+
+        <div class="logo">
+
+            <div class="arabic">
+                بنكك
+            </div>
+
+            <div class="english">
+                <span class="gold">b</span>ankak
+            </div>
+
+        </div>
+
+        <button class="menu-btn">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </header>
+
+
+    <div class="page-title">
+
+        تحويلات
+
+        <button
+            class="back-btn"
+            onclick="goHome()"
+        >
+            رجوع ❮
+        </button>
+
+    </div>
+
+
+    <div class="content">
+
+        <div
+            class="transfer-card"
+            onclick="showInfo()"
+        >
+
+            <div class="arrow">
+                ❮
+            </div>
+
+            <div>
+                حسابات أخرى
+            </div>
+
+            <div class="transfer-icon">
+                🏦
+            </div>
+
+        </div>
+
+
+        <div
+            class="transfer-card"
+            onclick="showInfo()"
+        >
+
+            <div class="arrow">
+                ❮
+            </div>
+
+            <div>
+                الدفع عبر الموبايل
+            </div>
+
+            <div class="transfer-icon">
+                ▯
+            </div>
+
+        </div>
+
+
+        <div
+            class="transfer-card"
+            onclick="showInfo()"
+        >
+
+            <div class="arrow">
+                ❮
+            </div>
+
+            <div style="text-align:center">
+                تحويل لبنك آخر<br>
+                باستخدام رقم البطاقة
+            </div>
+
+            <div class="transfer-icon">
+                ▤
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     تفاصيل الحساب
+===================================================== -->
+
+<section id="accountScreen" class="screen">
+
+    <header class="header">
+
+        <button class="info-btn">
+            i
+        </button>
+
+        <div class="logo">
+
+            <div class="arabic">
+                بنكك
+            </div>
+
+            <div class="english">
+                <span class="gold">b</span>ankak
+            </div>
+
+        </div>
+
+        <button class="menu-btn">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </header>
+
+
+    <div class="page-title">
+
+        تفاصيل الحساب
+
+        <button
+            class="back-btn"
+            onclick="goHome()"
+        >
+            رجوع ❮
+        </button>
+
+    </div>
+
+
+    <div class="content">
+
+        <!-- الحساب الأول -->
+
+        <div class="account-card">
+
+            <div class="account-top">
+
+                <div class="balance">
+                    0.00
+                </div>
+
+                <div class="account-info">
+
+                    <div class="account-name">
+                        حسابات الودائع لأجل
+                    </div>
+
+                    <div class="account-number">
+                        008X180984410001- A/C
+                    </div>
+
+                </div>
+
+                <div class="account-icon">
+                    🏦
+                </div>
+
+            </div>
+
+
+            <div class="account-actions">
+
+                <button
+                    class="account-action"
+                    onclick="showInfo()"
+                >
+                    عرض كشف الحساب
+                    <span class="action-icon">
+                        ▤
+                    </span>
+                </button>
+
+                <button
+                    class="account-action"
+                    onclick="showInfo()"
+                >
+                    التفاصيل
+                    <span class="action-icon">
+                        ♧
+                    </span>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- الحساب الثاني -->
+
+        <div class="account-card">
+
+            <div class="account-top">
+
+                <div class="balance">
+                    0.00
+                </div>
+
+                <div class="account-info">
+
+                    <div class="account-name">
+                        حساب توفير
+                    </div>
+
+                    <div class="account-number">
+                        1083080984410001<br>
+                        IBAN - SD0204080984410001
+                    </div>
+
+                </div>
+
+                <div class="account-icon">
+                    💰
+                </div>
+
+            </div>
+
+
+            <div class="account-actions">
+
+                <button
+                    class="account-action"
+                    onclick="showInfo()"
+                >
+                    عرض كشف الحساب
+                    <span class="action-icon">
+                        ▤
+                    </span>
+                </button>
+
+                <button
+                    class="account-action"
+                    onclick="showInfo()"
+                >
+                    رمز الدفع السريع QR
+                    <span class="action-icon">
+                        ▦
+                    </span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     دفع الفواتير
+===================================================== -->
+
+<section id="billsScreen" class="screen">
+
+    <header class="header">
+
+        <button class="info-btn">
+            i
+        </button>
+
+        <div class="logo">
+
+            <div class="arabic">
+                بنكك
+            </div>
+
+            <div class="english">
+                <span class="gold">b</span>ankak
+            </div>
+
+        </div>
+
+        <button class="menu-btn">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </header>
+
+
+    <div class="page-title">
+
+        دفع فواتير
+
+        <button
+            class="back-btn"
+            onclick="goHome()"
+        >
+            رجوع ❮
+        </button>
+
+    </div>
+
+
+    <div class="tabs">
+
+        <button class="tab active">
+            الفواتير
+        </button>
+
+        <button class="tab">
+            دفع مباشر
+        </button>
+
+    </div>
+
+
+    <div class="bills">
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                اتصالات/إنترنت
+            </div>
+
+            <div class="bill-icon">
+                ⌁
+            </div>
+        </button>
+
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                شراء الكهرباء
+            </div>
+
+            <div class="bill-icon">
+                ϟ
+            </div>
+        </button>
+
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                خطوط الطيران
+            </div>
+
+            <div class="bill-icon">
+                ✈
+            </div>
+        </button>
+
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                التعليم
+            </div>
+
+            <div class="bill-icon">
+                🎓
+            </div>
+        </button>
+
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                التسوق عبر الانترنت
+            </div>
+
+            <div class="bill-icon">
+                🛒
+            </div>
+        </button>
+
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                خدمات حكومية
+            </div>
+
+            <div class="bill-icon">
+                ⌂
+            </div>
+        </button>
+
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                الوقود
+            </div>
+
+            <div class="bill-icon">
+                ⛽
+            </div>
+        </button>
+
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                وسائل النقل
+            </div>
+
+            <div class="bill-icon">
+                ▰
+            </div>
+        </button>
+
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                خدمات أخرى
+            </div>
+
+            <div class="bill-icon">
+                •••
+            </div>
+        </button>
+
+
+        <button
+            class="bill"
+            onclick="showInfo()"
+        >
+            <div class="bill-title">
+                التبرعات
+            </div>
+
+            <div class="bill-icon">
+                ♥
+            </div>
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     النافذة
+===================================================== -->
+
+<div id="modal" class="modal">
+
+    <div class="modal-box">
+
+        <h3>
+            واجهة تجريبية
+        </h3>
+
+        <p id="modalMessage">
+            هذه الخاصية موجودة في التصميم التجريبي
+            ويمكن إضافة الوظيفة لها لاحقاً.
+        </p>
+
+        <button onclick="closeModal()">
+            إغلاق
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   تسجيل الدخول
+
+   مهم:
+   - يجب كتابة شيء في خانة الحساب
+   - يجب كتابة شيء في خانة كلمة المرور
+   - لا يشترط أن تكون البيانات حقيقية
+===================================================== */
+
+function login(){
+
+    const username =
+        document.getElementById("username")
+        .value
+        .trim();
+
+    const password =
+        document.getElementById("password")
+        .value
+        .trim();
+
+
+    // الخانتان فارغتان
+    if(username === "" && password === ""){
+
+        showInfoMessage(
+            "يرجى إدخال رقم الحساب وكلمة المرور."
+        );
+
+        return;
+    }
+
+
+    // رقم الحساب فارغ
+    if(username === ""){
+
+        showInfoMessage(
+            "يرجى إدخال رقم الحساب."
+        );
+
+        return;
+    }
+
+
+    // كلمة المرور فارغة
+    if(password === ""){
+
+        showInfoMessage(
+            "يرجى إدخال كلمة المرور."
+        );
+
+        return;
+    }
+
+
+    /*
+       إذا وصلت هنا فهذا يعني أن:
+       - خانة الحساب ليست فارغة
+       - خانة كلمة المرور ليست فارغة
+
+       لا يتم التحقق من صحة البيانات.
+    */
+
+    openPage("homeScreen");
+}
+
+
+/* =====================================================
+   إظهار / إخفاء كلمة المرور
+===================================================== */
+
+function togglePassword(){
+
+    const password =
+        document.getElementById("password");
+
+
+    if(password.type === "password"){
+
+        password.type = "text";
+
+    }else{
+
+        password.type = "password";
+
+    }
+}
+
+
+/* =====================================================
+   فتح الصفحات
+===================================================== */
+
+function openPage(id){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(function(screen){
+
+            screen.classList.remove("active");
+
+        });
+
+
+    const target =
+        document.getElementById(id);
+
+
+    if(target){
+
+        target.classList.add("active");
+
+        window.scrollTo({
+            top:0,
+            behavior:"instant"
+        });
+
+    }
+}
+
+
+/* =====================================================
+   العودة للرئيسية
+===================================================== */
+
+function goHome(){
+
+    openPage("homeScreen");
+
+}
+
+
+/* =====================================================
+   النافذة
+===================================================== */
+
+function showInfo(){
+
+    document
+        .getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+function showInfoMessage(message){
+
+    document
+        .getElementById("modalMessage")
+        .innerText = message;
+
+    document
+        .getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("modal")
+        .classList.remove("show");
+
+}
+
+
+/* إغلاق النافذة عند الضغط خارجها */
+
+document
+    .getElementById("modal")
+    .addEventListener("click",function(event){
+
+        if(event.target === this){
+
+            closeModal();
+
+        }
+
+    });
+
+
+/* =====================================================
+   منع إرسال النموذج الافتراضي عند الضغط Enter
+===================================================== */
+
+document
+    .getElementById("password")
+    .addEventListener("keydown",function(event){
+
+        if(event.key === "Enter"){
+
+            login();
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
